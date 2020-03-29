@@ -318,7 +318,7 @@ BOOL InitWaveData100(const char *wave_filename)
 			}
 		}
 
-		printf("Succesfully loaded internal Wave.dat");
+		printf("Succesfully loaded internal Wave.dat\n");
 		return TRUE;
 	}
 
@@ -808,11 +808,15 @@ BOOL StartOrganya(const char *path_wave)
 // Load organya file
 BOOL LoadOrganya(const char *name)
 {
-	if (!audio_backend_initialised)
+	if (!audio_backend_initialised) {
+		printf("Audio backend failed to initalize!\n");
 		return FALSE;
+	}
 
-	if (!org_data.InitMusicData(name))
+	if (!org_data.InitMusicData(name)) {
+		printf("Audio Data failed to initalize!\n");
 		return FALSE;
+	}
 
 	Volume = 100;
 	bFadeout = 0;
