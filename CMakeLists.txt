@@ -50,3 +50,11 @@ target_link_libraries(orgterm PRIVATE ${CMAKE_DL_LIBS})
 if(MSVC)
 	target_compile_definitions(orgterm PRIVATE _CRT_SECURE_NO_WARNINGS)	# Shut up those stupid warnings
 endif()
+
+
+include(GNUInstallDirs)
+
+# Install directories
+install(TARGETS orgterm
+    RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
+)
