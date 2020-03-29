@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/orgplayer.dir/File.cpp.o CMakeFiles/orgplayer.dir/main.cpp.o CMakeFiles/orgplayer.dir/miniaudio.cpp.o CMakeFiles/orgplayer.dir/Organya.cpp.o CMakeFiles/orgplayer.dir/PixTone.cpp.o CMakeFiles/orgplayer.dir/Random.cpp.o CMakeFiles/orgplayer.dir/Sound.cpp.o  -o orgplayer  -lm -ltinfo -lm -lpthread -ldl -ltinfo -lpthread -ldl 
