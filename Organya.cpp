@@ -308,14 +308,27 @@ BOOL InitWaveData100(const char *wave_filename)
 
 	FILE *file = fopen(wave_filename, "rb");
 
-	if (file == NULL)
-		return FALSE;
+	if (file == NULL) {
+		//use internal data
+		int WaveLoc = 0;
+		for ( int a = 0; a < 100; a++) {
+			for ( int b = 0; b < 0x100; b++) {
+				wave_data[a][b] = rWave[WaveLoc];
+				WaveLoc++;
+			}
+		}
 
-	fread(wave_data, 1, 100 * 0x100, file);
+		printf("Succesfully loaded internal Wave.dat");
+		return TRUE;
+	}
 
-	fclose(file);
+	else {
+		fread(wave_data, 1, 100 * 0x100, file);
 
-	return TRUE;
+		fclose(file);
+
+		return TRUE;
+	}
 }
 
 // 波形を１００個の中から選択して作成 (Select from 100 waveforms to create)
@@ -888,3 +901,4 @@ void UpdateOrganya(void)
 {
 	org_data.PlayData();
 }
+
