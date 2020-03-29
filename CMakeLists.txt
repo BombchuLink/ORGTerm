@@ -36,13 +36,11 @@ include(CheckLibraryExists)
 check_library_exists(m pow "" LIBM)
 if(LIBM)
 	target_link_libraries(orgterm PRIVATE m tinfo PRIVATE m)
-	list(APPEND STATIC_LIBS m)
 endif()
 
 check_library_exists(pthread pthread_create "" LIBPTHREAD)
 if(LIBPTHREAD)
 	target_link_libraries(orgterm PRIVATE pthread)
-	list(APPEND STATIC_LIBS pthread)
 endif()
 
 target_link_libraries(orgterm PRIVATE ${CMAKE_DL_LIBS})
