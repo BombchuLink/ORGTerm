@@ -180,6 +180,7 @@ BOOL AudioBackend_Init(void)
 	config.sampleRate = 44100;
 	config.dataCallback = Callback;
 	config.pUserData = NULL;
+	config.performanceProfile = ma_performance_profile_conservative;
 
 	output_frequency = 44100;
 

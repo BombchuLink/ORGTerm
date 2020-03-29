@@ -48,17 +48,18 @@ int main(int argc, char *argv[])
 
 		// Load song
 		fflush(stdout);
-		initscr(); cbreak(); noecho();
 		bool PlayOrg = LoadOrganya(argv[1]);
 		if (PlayOrg == true) {
+
 			// Start song
 			ChangeOrganyaVolume(100);
 			SetOrganyaPosition(0);
 			PlayOrganyaMusic();
 
 
+
 			//draw terminal stuff
-			initscr();noecho();refresh();
+			initscr();cbreak();noecho();refresh();
 			int Wait;
 			unsigned char Track[8];
 			unsigned short Freq[8];

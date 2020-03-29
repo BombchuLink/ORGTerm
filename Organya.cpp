@@ -326,6 +326,7 @@ BOOL InitWaveData100(const char *wave_filename)
 		fread(wave_data, 1, 100 * 0x100, file);
 
 		fclose(file);
+		printf("Succesfully loaded external Wave.dat\n");
 
 		return TRUE;
 	}
