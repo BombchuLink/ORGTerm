@@ -1,3 +1,0 @@
-/home/blink/repos/orgplayer/build/CMakeFiles/rebuild_cache.dir
-/home/blink/repos/orgplayer/build/CMakeFiles/orgplayer.dir
-/home/blink/repos/orgplayer/build/CMakeFiles/edit_cache.dir
