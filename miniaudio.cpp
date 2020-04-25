@@ -177,15 +177,15 @@ BOOL AudioBackend_Init(void)
 	config.playback.pDeviceID = NULL;
 	config.playback.format = ma_format_f32;
 	config.playback.channels = 2;
-	config.sampleRate = 48000;
+	config.sampleRate = 0;
 	config.dataCallback = Callback;
 	config.pUserData = NULL;
 	config.performanceProfile = ma_performance_profile_conservative;
 
-	output_frequency = 48000;
-
 	if (ma_device_init(NULL, &config, &device) == MA_SUCCESS)
 	{
+		output_frequency = device.sampleRate;
+
 		if (ma_mutex_init(device.pContext, &mutex) == MA_SUCCESS)
 		{
 			if (ma_mutex_init(device.pContext, &organya_mutex) == MA_SUCCESS)
