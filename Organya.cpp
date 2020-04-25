@@ -408,14 +408,18 @@ void PlayDramObject(unsigned char key, int mode, signed char track)
 
 ORGDATA org_data;
 
-void GetORGinfo(int*Wait, unsigned char Track[8], unsigned short Freq[8], int*CurrentMeasure, long*TotalMeasure, int*Crotchet, int*Bar) {
+void GetORGinfo(int*Wait, unsigned char Track[8], unsigned short Freq[8], long*CurrentMeasure, long*TotalMeasure, int*Crotchet, int*Bar, int*StartingLoop) {
 	//get wait time, measure total, total steps, tracks, and freqencies
 	*Wait = org_data.info.wait;
 	*Crotchet = org_data.info.dot;
 	*Bar = org_data.info.line;
-	//StartingLoop = info.repeat_x;
+	//start at index 1 instead of 0 because music
+	*StartingLoop = org_data.info.repeat_x / (org_data.info.line * org_data.info.dot);
 
-	*TotalMeasure = org_data.info.end_x / (org_data.info.line * org_data.info.dot);
+	*TotalMeasure = org_data.info.end_x / (org_data.info.line * org_data.info.dot) -1;
+	*CurrentMeasure = GetOrganyaPosition() / (org_data.info.line * org_data.info.dot);
+
+
 
 	//loop for track stuff
 	for (int a = 0; a < 8; a++) {

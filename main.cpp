@@ -59,55 +59,89 @@ int main(int argc, char *argv[])
 
 
 			//draw terminal stuff
-			initscr();cbreak();noecho();refresh();
+			initscr();cbreak();noecho();
+			nonl();
+			intrflush(stdscr, FALSE);
+			keypad(stdscr, FALSE);
 			int Wait;
 			unsigned char Track[8];
 			unsigned short Freq[8];
-			int CurrentMeasure;
-			long TotalMeasure;
-			int Crotchet, Bar;
-			GetORGinfo(&Wait, Track, Freq, &CurrentMeasure, &TotalMeasure, &Crotchet, &Bar);
-			// multiply Wait time by the Crotchet then divide 60000 (miliseconds in 1 min)
-			int BPM = 60000/(Wait*Crotchet);
-			CurrentMeasure = 0;
-			//int CurrentStep = 0;
-			//int TotalStep = 0;
-			printw("Wait Time/BPM	%d/%d\n", Wait, BPM);
-			//printw("Measure		%d/%d\n", CurrentMeasure, TotalMeasure);
-			printw("Measures	%d\n", TotalMeasure);
-			printw("Time Signature	%d/%d\n", Crotchet, Bar);
-			//printw("Steps		%d/%d\n", CurrentStep, TotalStep);
-			printw("Track 1		%d	(%d)\n", Track[0], Freq[0]);
-			printw("Track 2		%d	(%d)\n", Track[1], Freq[1]);
-			printw("Track 3		%d	(%d)\n", Track[2], Freq[2]);
-			printw("Track 4		%d	(%d)\n", Track[3], Freq[3]);
-			printw("Track 5		%d	(%d)\n", Track[4], Freq[4]);
-			printw("Track 6		%d	(%d)\n", Track[5], Freq[5]);
-			printw("Track 7		%d	(%d)\n", Track[6], Freq[6]);
-			printw("Track 8		%d	(%d)\n", Track[7], Freq[7]);
+			int Crotchet, Bar, StartingLoop;
+			long CurrentMeasure, TotalMeasure;
+			int OrgVol = 100;
+			int VolMessage = 0;
+			bool Quit = false;
+			bool OrgIsPlaying = true;
+			//int Loop = 0;
+			while (!(Quit)) {
+				clear();
+				refresh();
+				timeout(30);
+				//printw("Looped %d times\n", Loop++);
+				GetORGinfo(&Wait, Track, Freq, &CurrentMeasure, &TotalMeasure, &Crotchet, &Bar, &StartingLoop);
+				//Multiply Wait time by the Crotchet then divide 60000 (miliseconds in 1 min)
+				int BPM = 60000/(Wait*Crotchet);
+				//int CurrentStep = 0;
+				//int TotalStep = 0;
+				printw("Wait Time/BPM	%d/%d\n", Wait, BPM);
+				//CurrentMeasure++;
+				printw("Measure		%d/%d\nLoop Start	%d\n", CurrentMeasure, TotalMeasure, StartingLoop);
+				printw("Time Signature	%d/%d\n", Crotchet, Bar);
+				//printw("Steps		%d/%d\n", CurrentStep, TotalStep);
+				printw("Track 1		%d	(%d)\n", Track[0], Freq[0]);
+				printw("Track 2		%d	(%d)\n", Track[1], Freq[1]);
+				printw("Track 3		%d	(%d)\n", Track[2], Freq[2]);
+				printw("Track 4		%d	(%d)\n", Track[3], Freq[3]);
+				printw("Track 5		%d	(%d)\n", Track[4], Freq[4]);
+				printw("Track 6		%d	(%d)\n", Track[5], Freq[5]);
+				printw("Track 7		%d	(%d)\n", Track[6], Freq[6]);
+				printw("Track 8		%d	(%d)\n", Track[7], Freq[7]);
 
-			//only CS compatable orgs supported right now
-			/*
-			printf("Drum 1		%s", Drum[Drum1]);
-			printf("Drum 2		%s", Drum[Drum2]);
-			printf("Drum 3		%s", Drum[Drum3]);
-			printf("Drum 4		%s", Drum[Drum4]);
-			printf("Drum 5		%s", Drum[Drum5]);
-			printf("Drum 6		%s", Drum[Drum6]);
-			printf("Drum 7		%s", Drum[Drum7]);
-			printf("Drum 8		%s", Drum[Drum8]);
-			*/
-			//file size
+				//only CS compatable orgs supported right now
+				/*
+				printf("Drum 1		%s", Drum[Drum1]);
+				printf("Drum 2		%s", Drum[Drum2]);
+				printf("Drum 3		%s", Drum[Drum3]);
+				printf("Drum 4		%s", Drum[Drum4]);
+				printf("Drum 5		%s", Drum[Drum5]);
+				printf("Drum 6		%s", Drum[Drum6]);
+				printf("Drum 7		%s", Drum[Drum7]);
+				printf("Drum 8		%s", Drum[Drum8]);
+				*/
+				//file size
 
+				// user input
+				printw("Press q to exit.\n");
+				int key = getch();
+				switch (key) {
+					case 'q':;
+						Quit = true;
+						break;
+					case '/':;
+						OrgVol -= 5;
+						if (OrgVol < 0) {
+							OrgVol = 0;
+						}
+						ChangeOrganyaVolume(OrgVol);
+						VolMessage = 300;
+						break;
+					case ' ':;
+						 //pause/play
+						 OrgIsPlaying = !OrgIsPlaying;
+						 if (OrgIsPlaying) {
+							//stop
+							StopOrganyaMusic();
+						 }
+						 else {
+							//resume
+							PlayOrganyaMusic();
+						 }
 
-
-			// Wait until user presses q
-			printw("Press q to exit.\n");
-			while (1) {
-				int key;
-				key = getch();
-				if (key == 'q') {
-					break;
+					default:;
+						break;
+				}
+				if (VolMessage-- > 0) {
+					printw("Volume set to %d", OrgVol);
 				}
 			}
 			endwin();

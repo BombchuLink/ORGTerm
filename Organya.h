@@ -8,8 +8,7 @@
 
 extern BOOL g_mute[MAXTRACK];	// Used by the debug Mute menu
 
-void GetORGinfo(int*Wait, unsigned char Track[8], unsigned short Freq[8], int*CurrentMeasure, long*TotalMeasure, int*CurrentStep, int*TotalStep);
-
+void GetORGinfo(int*Wait, unsigned char Track[8], unsigned short Freq[8], long*CurrentMeasure, long*TotalMeasure, int*Crotchet, int*Bar, int*StartingLoop);
 
 BOOL MakeOrganyaWave(signed char track, signed char wave_no, signed char pipi);
 void OrganyaPlayData(void);
