@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
 		MakePixToneObject(drum6, 2, 155);
 
 		// Load song
-		fflush(stdout);
+		//fflush(stdout);
 		bool PlayOrg = LoadOrganya(argv[1]);
 		if (PlayOrg == true) {
 
@@ -55,8 +55,6 @@ int main(int argc, char *argv[])
 			ChangeOrganyaVolume(100);
 			SetOrganyaPosition(0);
 			PlayOrganyaMusic();
-
-
 
 			//draw terminal stuff
 			initscr();cbreak();noecho();
@@ -74,20 +72,14 @@ int main(int argc, char *argv[])
 			bool OrgIsPlaying = true;
 			//int Loop = 0;
 			while (!(Quit)) {
-				clear();
-				refresh();
-				timeout(30);
-				//printw("Looped %d times\n", Loop++);
+				erase();
+				timeout(16);
 				GetORGinfo(&Wait, Track, Freq, &CurrentMeasure, &TotalMeasure, &Crotchet, &Bar, &StartingLoop);
 				//Multiply Wait time by the Crotchet then divide 60000 (miliseconds in 1 min)
 				int BPM = 60000/(Wait*Crotchet);
-				//int CurrentStep = 0;
-				//int TotalStep = 0;
 				printw("Wait Time/BPM	%d/%d\n", Wait, BPM);
-				//CurrentMeasure++;
 				printw("Measure		%d/%d\nLoop Start	%d\n", CurrentMeasure, TotalMeasure, StartingLoop);
 				printw("Time Signature	%d/%d\n", Crotchet, Bar);
-				//printw("Steps		%d/%d\n", CurrentStep, TotalStep);
 				printw("Track 1		%d	(%d)\n", Track[0], Freq[0]);
 				printw("Track 2		%d	(%d)\n", Track[1], Freq[1]);
 				printw("Track 3		%d	(%d)\n", Track[2], Freq[2]);
@@ -143,6 +135,7 @@ int main(int argc, char *argv[])
 				if (VolMessage-- > 0) {
 					printw("Volume set to %d", OrgVol);
 				}
+				refresh();
 			}
 			endwin();
 		}
