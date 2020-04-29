@@ -88,6 +88,7 @@ int main(int argc, char *argv[])
 				printw("Track 6		%d	(%d)\n", Track[5], Freq[5]);
 				printw("Track 7		%d	(%d)\n", Track[6], Freq[6]);
 				printw("Track 8		%d	(%d)\n", Track[7], Freq[7]);
+				printw("Volume		%d/100\n", OrgVol);
 
 				//only CS compatable orgs supported right now
 				/*
@@ -115,11 +116,16 @@ int main(int argc, char *argv[])
 							OrgVol = 0;
 						}
 						ChangeOrganyaVolume(OrgVol);
-						VolMessage = 300;
+						break;
+					case '.':;
+						OrgVol += 5;
+						if (OrgVol > 100) {
+							OrgVol = 100;
+						}
+						ChangeOrganyaVolume(OrgVol);
 						break;
 					case ' ':;
 						 //pause/play
-						 OrgIsPlaying = !OrgIsPlaying;
 						 if (OrgIsPlaying) {
 							//stop
 							StopOrganyaMusic();
@@ -128,12 +134,10 @@ int main(int argc, char *argv[])
 							//resume
 							PlayOrganyaMusic();
 						 }
-
+						 OrgIsPlaying = !OrgIsPlaying;
+						 break;
 					default:;
 						break;
-				}
-				if (VolMessage-- > 0) {
-					printw("Volume set to %d", OrgVol);
 				}
 				refresh();
 			}
