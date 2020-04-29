@@ -1,4 +1,11 @@
 # ORGTerm
+Controls:
+```
+\	volume up
+.	volume down
+space	pause/resume
+q	quit
+```
 how to build:
 
 ```
