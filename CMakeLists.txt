@@ -38,6 +38,11 @@ if(LIBM)
 	target_link_libraries(orgterm PRIVATE m tinfo PRIVATE m)
 endif()
 
+check_library_exists(m pow "" LIBNCURSES)
+if(LIBNCURSES)
+	target_link_libraries(orgterm PRIVATE ncurses tinfo PRIVATE ncurses)
+endif()
+
 check_library_exists(pthread pthread_create "" LIBPTHREAD)
 if(LIBPTHREAD)
 	target_link_libraries(orgterm PRIVATE pthread)
