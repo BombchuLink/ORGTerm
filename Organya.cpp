@@ -413,12 +413,13 @@ void GetORGinfo(int*Wait, unsigned char Track[8], unsigned short Freq[8], long*C
 	*Wait = org_data.info.wait;
 	*Crotchet = org_data.info.dot;
 	*Bar = org_data.info.line;
-	//start at index 1 instead of 0 because music
-	*StartingLoop = org_data.info.repeat_x / (org_data.info.line * org_data.info.dot);
 
-	*TotalMeasure = org_data.info.end_x / (org_data.info.line * org_data.info.dot) -1;
-	*CurrentMeasure = GetOrganyaPosition() / (org_data.info.line * org_data.info.dot);
+	int StepsPerMeasure = org_data.info.line * org_data.info.dot;
+	*StartingLoop = org_data.info.repeat_x / StepsPerMeasure;
+	*TotalMeasure = org_data.info.end_x / StepsPerMeasure -1; //subtract 1 because last measure is never played
 
+	int OrgPos = GetOrganyaPosition();
+	*CurrentMeasure = (OrgPos -= (OrgPos % StepsPerMeasure))/StepsPerMeasure;
 
 
 	//loop for track stuff

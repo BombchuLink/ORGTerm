@@ -61,6 +61,7 @@ int main(int argc, char *argv[])
 			nonl();
 			intrflush(stdscr, FALSE);
 			keypad(stdscr, FALSE);
+			curs_set(0);	// hide the default screen cursor.
 			int Wait;
 			unsigned char Track[8];
 			unsigned short Freq[8];
