@@ -1,3 +1,4 @@
+
 # ORGTerm
 Controls:
 ```
@@ -13,4 +14,8 @@ cmake -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build
 ```
 
-there are two example orgs provided for testing
+get Cave Story orgs using the included installorgs.sh file - requires curl and unzip
+```
+./installorgs.sh
+```
+outputs to ./orgs directory
